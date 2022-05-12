@@ -1,6 +1,7 @@
 import css from "./styles.module.scss";
 import Input from "../../../components/Input";
 import { useState } from "react";
+import Swal from 'sweetalert2'
 
 export default function TodoView(): JSX.Element {
   const [task, setTask] = useState<string[]>([]);
@@ -16,7 +17,12 @@ export default function TodoView(): JSX.Element {
 
   // passa a palavra completa para task, e recebera o novo valor que está em valueInput
   const taskToDo = () => {
-    setTask([...task, valueInput]);
+      if(valueInput === ''){
+        Swal.fire('Please, write some task to do !')
+      }else{
+
+          setTask([...task, valueInput]);
+      }
   };
 
   return (
@@ -32,9 +38,8 @@ export default function TodoView(): JSX.Element {
           Do it !
         </button>
       </section>
-
-      {task.length < 0 ? (
-        <p> You do not have any task</p>
+      {task.length <= 0 ? (
+        <p className={css.paragraph}> You do not have any task</p>
       ) : (
         task.map((item) => (
           <div className={css.inputLabel}>
